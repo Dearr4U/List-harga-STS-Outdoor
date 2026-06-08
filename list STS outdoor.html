@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Sewa Alat STS Outdoor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style>
+        :root {
+            --bg-main: #0B0B0C;
+            --bg-card: rgba(30, 30, 32, 0.7);
+            --bg-input: #1F1F22;
+            --primary: #FF6B00;
+            --primary-glow: rgba(255, 107, 0, 0.35);
+            --primary-hover: #F06500;
+            --text-main: #FFFFFF;
+            --text-muted: #949499;
+            --accent-green: #00E676;
+            --border-color: rgba(255, 255, 255, 0.07);
+            --radius-lg: 20px;
+            --radius-md: 14px;
+            --radius-sm: 10px;
+            --shadow-premium: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            padding-bottom: 130px; 
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% -20%, #2A1708 0%, #0B0B0C 70%);
+            background-attachment: fixed;
+        }
+
+        /* App Bar Header */
+        header {
+            background: rgba(18, 18, 20, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 24px 20px;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-title span {
+            color: var(--primary);
+            text-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .header-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        /* Duration Picker Widget */
+        .duration-container {
+            margin: 20px 16px;
+            background: linear-gradient(135deg, rgba(35, 35, 38, 0.8) 0%, rgba(20, 20, 22, 0.8) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-premium);
+            padding: 20px;
+            border-radius: var(--radius-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .duration-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: var(--primary);
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .duration-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-muted);
+        }
+
+        .duration-control {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: var(--bg-input);
+            padding: 4px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-counter {
+            background-color: #2D2D31;
+            border: none;
+            color: var(--text-main);
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            font-size: 1.3rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-counter:active {
+            transform: scale(0.9);
+            background-color: var(--primary);
+        }
+
+        .duration-value {
+            font-size: 1.2rem;
+            font-weight: 800;
+            min-width: 70px;
+            text-align: center;
+            color: var(--text-main);
+        }
+
+        /* Search Box */
+        .search-box {
+            margin: 0 16px 20px 16px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            background-color: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            padding: 16px 16px 16px 44px;
+            border-radius: var(--radius-md);
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-premium);
+        }
+
+        .search-box::after {
+            content: '🔍';
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1rem;
+            opacity: 0.6;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(255, 107, 0, 0.2);
+            background-color: rgba(40, 40, 45, 0.9);
+        }
+
+        /* Navigation Tab Slider */
+        .tabs-container {
+            display: flex;
+            overflow-x: auto;
+            padding: 4px 16px;
+            gap: 10px;
+            margin-bottom: 24px;
+            scrollbar-width: none;
+        }
+
+        .tabs-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            white-space: nowrap;
+            background-color: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .tab.active {
+            background: var(--primary);
+            color: var(--text-main);
+            border-color: var(--primary);
+            box-shadow: 0 4px 15px var(--primary-glow);
+            transform: translateY(-2px);
+        }
+
+        /* Items Grid & Cards */
+        .items-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            padding: 0 16px;
+        }
+
+        /* Animasi Masuk Untuk Kartu */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .item-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeInUp 0.4s ease forwards;
+            box-shadow: var(--shadow-premium);
+        }
+
+        .item-card.selected {
+            border-color: var(--primary);
+            background: linear-gradient(145deg, rgba(38,38,42,0.8) 0%, rgba(28,28,30,0.9) 100%);
+            box-shadow: 0 0 20px rgba(255, 107, 0, 0.15), var(--shadow-premium);
+            transform: translateY(-2px);
+        }
+
+        .item-badge {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            background: rgba(255, 107, 0, 0.12);
+            color: var(--primary);
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(255, 107, 0, 0.2);
+        }
+
+        .item-badge.beli {
+            background: rgba(0, 230, 118, 0.12);
+            color: var(--accent-green);
+            border-color: rgba(0, 230, 118, 0.2);
+        }
+
+        .item-badge.free {
+            background: rgba(33, 150, 243, 0.12);
+            color: #2196F3;
+            border-color: rgba(33, 150, 243, 0.2);
+        }
+
+        .item-name {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            padding-right: 65px;
+            letter-spacing: -0.3px;
+        }
+
+        .price-details {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        .card-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            border-top: 1px solid rgba(255,255,255,0.04);
+            padding-top: 14px;
+        }
+
+        .current-rate {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #FFFFFF;
+            letter-spacing: -0.5px;
+        }
+
+        .current-rate small {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-left: 2px;
+        }
+
+        .qty-control {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            padding: 4px;
+            border-radius: var(--radius-sm);
+        }
+
+        .btn-qty {
+            width: 34px;
+            height: 34px;
+            border-radius: 6px;
+            background-color: #2D2D31;
+            border: none;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-qty:active {
+            background-color: var(--primary);
+            transform: scale(0.9);
+        }
+
+        .qty-value {
+            font-size: 1rem;
+            font-weight: 700;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        /* Sticky Bottom Bar */
+        .bottom-bar {
+            position: fixed;
+            bottom: 16px;
+            left: 16px;
+            right: 16px;
+            background: rgba(26, 26, 29, 0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 200;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .summary-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .summary-count {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .summary-total {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-shadow: 0 0 20px rgba(255, 107, 0, 0.2);
+            letter-spacing: -0.5px;
+        }
+
+        .btn-confirm {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(255, 107, 0, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-confirm:active {
+            transform: scale(0.96);
+            background-color: var(--primary-hover);
+        }
+
+        /* Fullscreen Overlay / Animation Container */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 300;
+            opacity: 0;
+            visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Success Animation Area */
+        .animation-block {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .success-circle {
+            width: 100px;
+            height: 100px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 30px rgba(0, 230, 118, 0.4);
+            transform: scale(0);
+        }
+
+        .success-circle svg {
+            width: 55px;
+            height: 55px;
+            color: white;
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+        }
+
+        /* Premium Floating Receipt Card */
+        .receipt-card {
+            width: 100%;
+            max-width: 450px;
+            background: linear-gradient(145deg, #1A1A1C 0%, #111112 100%);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            opacity: 0;
+            transform: translateY(30px);
+            display: none;
+        }
+
+        .receipt-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding-bottom: 14px;
+            margin-bottom: 18px;
+        }
+
+        .receipt-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-close-modal {
+            background: #252529;
+            border: none;
+            color: var(--text-main);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .btn-close-modal:hover {
+            background: var(--primary);
+        }
+
+        .receipt-meta {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .receipt-items-list {
+            max-height: 240px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        /* Custom Scrollbar for Items List */
+        .receipt-items-list::-webkit-scrollbar {
+            width: 4px;
+        }
+        .receipt-items-list::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+        }
+
+        .receipt-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed rgba(255,255,255,0.04);
+            font-size: 0.9rem;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .receipt-item-name {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .receipt-item-qty {
+            color: var(--primary);
+            font-weight: 700;
+            margin-left: 4px;
+        }
+
+        .receipt-item-price {
+            font-weight: 700;
+            color: #FFFFFF;
+        }
+
+        .receipt-footer-total {
+            margin-top: 18px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .total-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .total-amount {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--accent-green);
+            text-shadow: 0 0 15px rgba(0, 230, 118, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-title">⛺ STS<span>OUTDOOR</span></div>
+        <div class="header-subtitle">Kalkulator Pengeluaran Sewa Perlengkapan</div>
+    </header>
+
+    <div class="duration-container">
+        <div class="duration-label">
+            <span>DURASI SEWA BARANG</span>
+            <span style="color: var(--primary); font-size: 0.75rem; font-weight:700;">PROSES REAL-TIME</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 0.95rem; font-weight: 600; color: var(--text-muted);">Berapa hari mendaki?</span>
+            <div class="duration-control">
+                <button class="btn-counter" onclick="adjustDuration(-1)">-</button>
+                <div class="duration-value" id="duration-display">1 Hari</div>
+                <button class="btn-counter" onclick="adjustDuration(1)">+</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="search-box">
+        <input type="text" class="search-input" id="search-bar" placeholder="Cari alat atau perlengkapan..." oninput="filterItems()">
+    </div>
+
+    <div class="tabs-container" id="tabs-bar">
+        <div class="tab active" onclick="switchCategory(event, 'all')">Semua Alat</div>
+        <div class="tab" onclick="switchCategory(event, 'tenda')">⛺ Tenda</div>
+        <div class="tab" onclick="switchCategory(event, 'tas')">🎒 Tas & Sepatu</div>
+        <div class="tab" onclick="switchCategory(event, 'pakaian')">🧥 Pakaian & Aksesoris</div>
+        <div class="tab" onclick="switchCategory(event, 'masak')">🍳 Alat Masak</div>
+        <div class="tab" onclick="switchCategory(event, 'lainnya')">🪵 Pendukung</div>
+    </div>
+
+    <div class="items-grid" id="items-grid-container">
+        </div>
+
+    <div class="bottom-bar">
+        <div class="summary-info">
+            <div class="summary-count" id="total-items-count">0 item dipilih</div>
+            <div class="summary-total" id="total-price-display">Rp 0</div>
+        </div>
+        <button class="btn-confirm" onclick="triggerConfirmation()">Konfirmasi</button>
+    </div>
+
+    <div class="modal-overlay" id="receipt-modal">
+        
+        <div class="animation-block" id="anim-container">
+            <div class="success-circle" id="success-ring">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+        </div>
+
+        <div class="receipt-card" id="invoice-card">
+            <div class="receipt-header">
+                <div class="receipt-title">📄 Rincian Nota Digital</div>
+                <button class="btn-close-modal" onclick="closeReceiptModal()">✕</button>
+            </div>
+            
+            <div class="receipt-meta">
+                <span>Metode Perhitungan</span>
+                <span id="modal-duration-text" style="font-weight: 700; color: var(--text-main);">1 Hari Sewa</span>
+            </div>
+            
+            <div class="receipt-items-list" id="modal-items-list-container">
+                </div>
+            
+            <div class="receipt-footer-total">
+                <span class="total-label">Estimasi Total</span>
+                <span class="total-amount" id="modal-grand-total">Rp 0</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DATA SEWA TETAP KONSISTEN
+        const itemsData = [
+            { id: "tenda_2p_sl", name: "Tenda 2p Single Layer", cat: "tenda", h1: 38000, h2: 38000, h3: 48000, ext: 10000, type: "sewa", note: "" },
+            { id: "tenda_23p_dl", name: "Tenda 2-3p Dobel Layer", cat: "tenda", h1: 40000, h2: 40000, h3: 55000, ext: 15000, type: "sewa", note: "" },
+            { id: "tenda_34p_dl", name: "Tenda 3-4p Dobel Layer", cat: "tenda", h1: 45000, h2: 45000, h3: 60000, ext: 15000, type: "sewa", note: "" },
+            { id: "tenda_45p_dl", name: "Tenda 4-5p Dobel Layer", cat: "tenda", h1: 55000, h2: 55000, h3: 70000, ext: 15000, type: "sewa", note: "" },
+            { id: "tenda_67p_dl", name: "Tenda 6-7p Dobel Layer", cat: "tenda", h1: 80000, h2: 80000, h3: 100000, ext: 20000, type: "sewa", note: "" },
+            { id: "tenda_glamping", name: "Tenda Family 4p Glamping", cat: "tenda", h1: 100000, h2: 100000, h3: 130000, ext: 30000, type: "sewa", note: "" },
+            { id: "tenda_ul_2p", name: "Tenda UL 2p Premium + Footprint", cat: "tenda", h1: 60000, h2: 60000, h3: 90000, ext: 30000, type: "sewa", note: "" },
+            { id: "tenda_ul_4p", name: "Tenda UL 4p Premium + Footprint", cat: "tenda", h1: 110000, h2: 110000, h3: 150000, ext: 40000, type: "sewa", note: "" },
+            { id: "sepatu_hiking", name: "Sepatu Hiking", cat: "tas", h1: 30000, h2: 30000, h3: 40000, ext: 10000, type: "sewa", note: "" },
+            { id: "sepatu_trail", name: "Sepatu Trail Run", cat: "tas", h1: 40000, h2: 40000, h3: 50000, ext: 10000, type: "sewa", note: "" },
+            { id: "tracking_pole", name: "Tracking Pole", cat: "tas", h1: 10000, h2: 15000, h3: 20000, ext: 5000, type: "sewa", note: "" },
+            { id: "hydropack", name: "Hydropack", cat: "tas", h1: 20000, h2: 25000, h3: 30000, ext: 5000, type: "sewa", note: "" },
+            { id: "tas_summit_18l", name: "Tas Summit 18L", cat: "tas", h1: 12000, h2: 15000, h3: 18000, ext: 3000, type: "sewa", note: "" },
+            { id: "carrier_40l", name: "Tas Carrier 40L", cat: "tas", h1: 18000, h2: 28000, h3: 38000, ext: 8000, type: "sewa", note: "Belum termasuk Rain Cover" },
+            { id: "carrier_60l", name: "Tas Carrier 60L", cat: "tas", h1: 22000, h2: 32000, h3: 42000, ext: 10000, type: "sewa", note: "Belum termasuk Rain Cover" },
+            { id: "carrier_80l", name: "Tas Carrier 80L", cat: "tas", h1: 28000, h2: 40000, h3: 50000, ext: 10000, type: "sewa", note: "Belum termasuk Rain Cover" },
+            { id: "rain_cover", name: "Rain Cover Tas", cat: "tas", h1: 5000, h2: 7000, h3: 9000, ext: 2000, type: "sewa", note: "" },
+            { id: "jaket_uv", name: "Jaket UV", cat: "pakaian", h1: 20000, h2: 30000, h3: 40000, ext: 10000, type: "sewa", note: "" },
+            { id: "jaket_gorpcore", name: "Jaket Gorpcore", cat: "pakaian", h1: 30000, h2: 40000, h3: 50000, ext: 10000, type: "sewa", note: "" },
+            { id: "jaket_std", name: "Jaket Outdoor Standard", cat: "pakaian", h1: 20000, h2: 30000, h3: 40000, ext: 10000, type: "sewa", note: "" },
+            { id: "celana_outdoor", name: "Celana Outdoor", cat: "pakaian", h1: 12000, h2: 20000, h3: 25000, ext: 5000, type: "sewa", note: "" },
+            { id: "sarung_tangan", name: "Sarung Tangan", cat: "pakaian", h1: 4000, h2: 7000, h3: 10000, ext: 3000, type: "sewa", note: "" },
+            { id: "topi", name: "Topi Gunung / Kupluk", cat: "pakaian", h1: 5000, h2: 8000, h3: 10000, ext: 2000, type: "sewa", note: "" },
+            { id: "sleeping_bag", name: "Sleeping Bag", cat: "pakaian", h1: 8000, h2: 15000, h3: 18000, ext: 3000, type: "sewa", note: "" },
+            { id: "jas_hujan", name: "Jas Hujan Ponco", cat: "pakaian", h1: 15000, h2: 20000, h3: 25000, ext: 5000, type: "sewa", note: "" },
+            { id: "gaiter", name: "Gaiter Kaki", cat: "pakaian", h1: 8000, h2: 10000, h3: 12000, ext: 2000, type: "sewa", note: "" },
+            { id: "kompor_besar", name: "Kompor Besar Kotak", cat: "masak", h1: 15000, h2: 25000, h3: 30000, ext: 5000, type: "sewa", note: "" },
+            { id: "pan_grill", name: "Pan Grill Panggangan", cat: "masak", h1: 15000, h2: 25000, h3: 30000, ext: 5000, type: "sewa", note: "" },
+            { id: "paket_grill", name: "Paket Grill Lengkap", cat: "masak", h1: 35000, h2: 50000, h3: 60000, ext: 10000, type: "sewa", note: "Include Tabung & Penjepit" },
+            { id: "kompor_kecil", name: "Kompor Kecil Portable", cat: "masak", h1: 5000, h2: 10000, h3: 14000, ext: 4000, type: "sewa", note: "" },
+            { id: "kompor_bunga", name: "Kompor Bunga Windproof", cat: "masak", h1: 10000, h2: 15000, h3: 20000, ext: 5000, type: "sewa", note: "" },
+            { id: "nasting_besar", name: "Nasting Besar (Isi 4 set)", cat: "masak", h1: 15000, h2: 20000, h3: 25000, ext: 5000, type: "sewa", note: "" },
+            { id: "nasting_kecil", name: "Nasting Kecil (Isi 2 set)", cat: "masak", h1: 8000, h2: 12000, h3: 15000, ext: 3000, type: "sewa", note: "" },
+            { id: "teko", name: "Teko Camping", cat: "masak", h1: 8000, h2: 12000, h3: 15000, ext: 3000, type: "sewa", note: "" },
+            { id: "gas_kaleng", name: "Gas Kaleng (Sewa)", cat: "masak", h1: 8000, h2: 8000, h3: 8000, ext: 0, type: "sewa", note: "Bisa Tukar Kaleng Kosong Rp10k" },
+            { id: "head_lamp", name: "Head Lamp (Senter Kepala)", cat: "lainnya", h1: 4000, h2: 7000, h3: 10000, ext: 3000, type: "sewa", note: "" },
+            { id: "senter", name: "Senter SWAT", cat: "lainnya", h1: 4000, h2: 7000, h3: 10000, ext: 3000, type: "sewa", note: "" },
+            { id: "lampu_lapangan", name: "Lampu Lapangan Tiang", cat: "lainnya", h1: 10000, h2: 15000, h3: 18000, ext: 3000, type: "sewa", note: "" },
+            { id: "lampu_tenda", name: "Lampu Tenda Gantung", cat: "lainnya", h1: 4000, h2: 7000, h3: 10000, ext: 3000, type: "sewa", note: "" },
+            { id: "tempat_telur", name: "Tempat Telur Pelindung", cat: "lainnya", h1: 4000, h2: 6000, h3: 8000, ext: 2000, type: "sewa", note: "" },
+            { id: "flysheet_3x4", name: "Flysheet 3x4M", cat: "lainnya", h1: 10000, h2: 15000, h3: 20000, ext: 5000, type: "sewa", note: "" },
+            { id: "tiang_flysheet", name: "Tiang Flysheet (Poles)", cat: "lainnya", h1: 10000, h2: 15000, h3: 20000, ext: 5000, type: "sewa", note: "" },
+            { id: "paket_flysheet", name: "Paket Flysheet Lengkap", cat: "lainnya", h1: 18000, h2: 28000, h3: 38000, ext: 10000, type: "sewa", note: "" },
+            { id: "matras_black", name: "Matras Spons Hitam", cat: "lainnya", h1: 4000, h2: 7000, h3: 10000, ext: 3000, type: "sewa", note: "" },
+            { id: "matras_foil", name: "Matras Foil Aluminium 2x1M", cat: "lainnya", h1: 10000, h2: 15000, h3: 20000, ext: 5000, type: "sewa", note: "" },
+            { id: "meja_lipat", name: "Meja Lipat Camping", cat: "lainnya", h1: 15000, h2: 20000, h3: 25000, ext: 5000, type: "sewa", note: "" },
+            { id: "kursi_lipat", name: "Kursi Lipat Camping", cat: "lainnya", h1: 15000, h2: 20000, h3: 25000, ext: 5000, type: "sewa", note: "" },
+            { id: "footprint", name: "Footprint Alas Tenda", cat: "lainnya", h1: 15000, h2: 20000, h3: 25000, ext: 5000, type: "sewa", note: "" },
+            { id: "dry_bag", name: "Dry Bag 10L", cat: "lainnya", h1: 10000, h2: 15000, h3: 20000, ext: 5000, type: "sewa", note: "" },
+            { id: "power_bank", name: "Power Bank Charger", cat: "lainnya", h1: 20000, h2: 25000, h3: 30000, ext: 5000, type: "sewa", note: "" },
+            { id: "tripod", name: "Tripod HP / Kamera", cat: "lainnya", h1: 10000, h2: 15000, h3: 20000, ext: 5000, type: "sewa", note: "" },
+            { id: "hammock", name: "Hammock Ayunan", cat: "lainnya", h1: 8000, h2: 12000, h3: 15000, ext: 3000, type: "sewa", note: "" },
+            { id: "water_bag", name: "Water Bag Galon Lipat", cat: "lainnya", h1: 5000, h2: 7000, h3: 9000, ext: 2000, type: "sewa", note: "" },
+            { id: "baterai", name: "Baterai AA / AAA", cat: "lainnya", h1: 1000, type: "beli", note: "Harga per 1 pcs (Beli putus)" },
+            { id: "emergency_blanket", name: "Emergency Blanket Foil", cat: "lainnya", h1: 10000, type: "beli", note: "Milik Sendiri (Beli putus)" },
+            { id: "hand_warmer", name: "Hand Warmer Pack", cat: "lainnya", h1: 10000, type: "beli", note: "Sekali Pakai (Beli putus)" },
+            { id: "gelas_kecil", name: "Gelas Enamel Kecil", cat: "lainnya", h1: 0, type: "free", note: "Gratis pinjam maks 2 pcs" }
+        ];
+
+        let rentDuration = 1;
+        let selectedItems = {}; 
+        let currentCategory = 'all';
+
+        function formatRupiah(angka) {
+            return "Rp " + angka.toLocaleString('id-ID');
+        }
+
+        function calculateSingleItemPrice(item, days) {
+            if (item.type === "beli") return item.h1;
+            if (item.type === "free") return 0;
+            if (days === 1) return item.h1;
+            if (days === 2) return item.h2;
+            if (days === 3) return item.h3;
+            return item.h3 + ((days - 3) * item.ext);
+        }
+
+        function adjustDuration(amount) {
+            let newDuration = rentDuration + amount;
+            if (newDuration < 1) newDuration = 1;
+            rentDuration = newDuration;
+            document.getElementById('duration-display').innerText = rentDuration + " Hari";
+            renderItemsList();
+            updateGlobalTotal();
+        }
+
+        function renderItemsList() {
+            const container = document.getElementById('items-grid-container');
+            container.innerHTML = '';
+            const searchTerm = document.getElementById('search-bar').value.toLowerCase();
+
+            itemsData.forEach((item, index) => {
+                if (currentCategory !== 'all' && item.cat !== currentCategory) return;
+                if (searchTerm && !item.name.toLowerCase().includes(searchTerm)) return;
+
+                const qty = selectedItems[item.id] || 0;
+                const unitPrice = calculateSingleItemPrice(item, rentDuration);
+
+                let priceStructureText = "";
+                if (item.type === "sewa") {
+                    priceStructureText = `H1: ${item.h1/1000}k | H2: ${item.h2/1000}k | H3: ${item.h3/1000}k | +H: ${item.ext/1000}k`;
+                } else if (item.type === "beli") {
+                    priceStructureText = "Sistem beli putus / milik sendiri";
+                } else {
+                    priceStructureText = "Fasilitas gratis pinjam maks 2 pcs";
+                }
+
+                const card = document.createElement('div');
+                card.className = `item-card ${qty > 0 ? 'selected' : ''}`;
+                card.style.animationDelay = `${index * 0.03}s`;
+                
+                let badgeHTML = `<span class="item-badge">Sewa</span>`;
+                if (item.type === 'beli') badgeHTML = `<span class="item-badge beli">Beli</span>`;
+                if (item.type === 'free') badgeHTML = `<span class="item-badge free">Gratis</span>`;
+
+                card.innerHTML = `
+                    ${badgeHTML}
+                    <div>
+                        <div class="item-name">${item.name}</div>
+                        <div class="price-details">
+                            ${priceStructureText}<br>
+                            ${item.note ? `<span style="color: #FF8A00; font-size:0.75rem; font-weight:600;">⚠️ ${item.note}</span>` : ''}
+                        </div>
+                    </div>
+                    <div class="card-bottom">
+                        <div class="current-rate">
+                            ${formatRupiah(unitPrice)}
+                            <small>${item.type === 'sewa' ? '/total' : '/pcs'}</small>
+                        </div>
+                        <div class="qty-control">
+                            <button class="btn-qty" onclick="changeQty('${item.id}', -1)">-</button>
+                            <span class="qty-value">${qty}</span>
+                            <button class="btn-qty" onclick="changeQty('${item.id}', 1)">+</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function changeQty(itemId, amount) {
+            const item = itemsData.find(i => i.id === itemId);
+            let currentQty = selectedItems[itemId] || 0;
+            let newQty = currentQty + amount;
+
+            if (newQty < 0) newQty = 0;
+            
+            if (item.type === "free" && newQty > 2) {
+                alert("Maksimal peminjaman gelas gratis adalah 2 pcs per orang!");
+                return;
+            }
+
+            if (newQty === 0) {
+                delete selectedItems[itemId];
+            } else {
+                selectedItems[itemId] = newQty;
+            }
+
+            renderItemsList();
+            updateGlobalTotal();
+        }
+
+        function updateGlobalTotal() {
+            let totalItems = 0;
+            let totalPrice = 0;
+
+            for (const itemId in selectedItems) {
+                const qty = selectedItems[itemId];
+                const item = itemsData.find(i => i.id === itemId);
+                if (item) {
+                    totalItems += qty;
+                    totalPrice += calculateSingleItemPrice(item, rentDuration) * qty;
+                }
+            }
+
+            document.getElementById('total-items-count').innerText = totalItems + " item dipilih";
+            document.getElementById('total-price-display').innerText = formatRupiah(totalPrice);
+        }
+
+        function switchCategory(e, categoryName) {
+            currentCategory = categoryName;
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(t => t.classList.remove('active'));
+            e.target.classList.add('active');
+            renderItemsList();
+        }
+
+        function filterItems() {
+            renderItemsList();
+        }
+
+        /* FITUR ANIMASI ANIME.JS & CARD NOTA BARU */
+        function triggerConfirmation() {
+            let hasSelection = Object.keys(selectedItems).length > 0;
+            if (!hasSelection) {
+                alert("Silakan pilih minimal 1 jenis barang terlebih dahulu!");
+                return;
+            }
+
+            // Setup Data Awal Nota Digital
+            document.getElementById('modal-duration-text').innerText = rentDuration + " Hari Masa Sewa";
+            const listContainer = document.getElementById('modal-items-list-container');
+            listContainer.innerHTML = '';
+
+            let grandTotal = 0;
+            for (const itemId in selectedItems) {
+                const qty = selectedItems[itemId];
+                const item = itemsData.find(i => i.id === itemId);
+                if (item) {
+                    const subtotal = calculateSingleItemPrice(item, rentDuration) * qty;
+                    grandTotal += subtotal;
+
+                    const row = document.createElement('div');
+                    row.className = 'receipt-item-row';
+                    row.innerHTML = `
+                        <div>
+                            <span class="receipt-item-name">${item.name}</span>
+                            <span class="receipt-item-qty">x${qty}</span>
+                        </div>
+                        <span class="receipt-item-price">${formatRupiah(subtotal)}</span>
+                    `;
+                    listContainer.appendChild(row);
+                }
+            }
+            document.getElementById('modal-grand-total').innerText = formatRupiah(grandTotal);
+
+            // Buka Modal Overlay Layar
+            const overlay = document.getElementById('receipt-modal');
+            const animContainer = document.getElementById('anim-container');
+            const invoiceCard = document.getElementById('invoice-card');
+            
+            overlay.classList.add('active');
+            animContainer.style.display = 'flex';
+            invoiceCard.style.display = 'none';
+
+            // Jalankan Timeline Animasi Menggunakan Anime.js
+            let timeline = anime.timeline({
+                easing: 'easeOutElastic(1, .8)'
+            });
+
+            timeline
+            .add({
+                targets: '#success-ring',
+                scale: [0, 1],
+                duration: 800
+            })
+            .add({
+                targets: '#success-ring svg',
+                strokeDashoffset: [100, 0],
+                duration: 600,
+                easing: 'easeInOutSine'
+            }, '-=300')
+            .add({
+                targets: '#success-ring',
+                scale: [1, 0],
+                opacity: [1, 0],
+                duration: 500,
+                delay: 600, 
+                easing: 'easeInBack',
+                complete: function() {
+                    // Sembunyikan lingkaran animasi, ganti ke floating card rincian nota
+                    animContainer.style.display = 'none';
+                    invoiceCard.style.display = 'block';
+                    
+                    // Animasi masuk untuk Card Nota Utama & Stagger list harganya
+                    anime({
+                        targets: '#invoice-card',
+                        opacity: [0, 1],
+                        translateY: [30, 0],
+                        duration: 600,
+                        easing: 'easeOutCubic'
+                    });
+
+                    anime({
+                        targets: '.receipt-item-row',
+                        opacity: [0, 1],
+                        translateY: [10, 0],
+                        delay: anime.stagger(60),
+                        easing: 'easeOutCubic'
+                    });
+                }
+            });
+        }
+
+        function closeReceiptModal() {
+            document.getElementById('receipt-modal').classList.remove('active');
+            // Kembalikan opacity objek ke setelan awal
+            document.getElementById('invoice-card').style.opacity = 0;
+            document.getElementById('success-ring').style.opacity = 1;
+        }
+
+        window.onload = function() {
+            renderItemsList();
+        };
+    </script>
+</body>
+</html>
