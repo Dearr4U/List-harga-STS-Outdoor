@@ -3,27 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalkulator Sewa Alat STS Outdoor</title>
+    <title>Kalkulator Sewa Alat STS Outdoor - Premium</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <style>
         :root {
-            --bg-main: #0B0B0C;
-            --bg-card: rgba(30, 30, 32, 0.7);
-            --bg-input: #1F1F22;
-            --primary: #FF6B00;
-            --primary-glow: rgba(255, 107, 0, 0.35);
-            --primary-hover: #F06500;
-            --text-main: #FFFFFF;
-            --text-muted: #949499;
+            --bg-main: #060608;
+            --bg-card: rgba(18, 18, 22, 0.45);
+            --bg-card-hover: rgba(28, 28, 35, 0.7);
+            --bg-input: #131316;
+            --primary: #FF5500;
+            --primary-gradient: linear-gradient(135deg, #FF7A00 0%, #FF3D00 100%);
+            --primary-glow: rgba(255, 85, 0, 0.25);
+            --text-main: #F5F5F7;
+            --text-muted: #86868B;
             --accent-green: #00E676;
-            --border-color: rgba(255, 255, 255, 0.07);
-            --radius-lg: 20px;
-            --radius-md: 14px;
-            --radius-sm: 10px;
-            --shadow-premium: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            --accent-green-gradient: linear-gradient(135deg, #00E676 0%, #00B0FF 100%);
+            --border-color: rgba(255, 255, 255, 0.05);
+            --border-hover: rgba(255, 255, 255, 0.12);
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+            --shadow-premium: 0 12px 40px -10px rgba(0, 0, 0, 0.7);
         }
 
         * {
@@ -37,18 +40,25 @@
         body {
             background-color: var(--bg-main);
             color: var(--text-main);
-            padding-bottom: 130px; 
+            padding-bottom: 180px; 
             overflow-x: hidden;
-            background-image: radial-gradient(circle at 50% -20%, #2A1708 0%, #0B0B0C 70%);
+            background-image: 
+                radial-gradient(circle at 80% 20%, rgba(255, 85, 0, 0.07) 0%, transparent 50%),
+                radial-gradient(circle at 20% 60%, rgba(0, 230, 118, 0.04) 0%, transparent 40%);
             background-attachment: fixed;
         }
 
-        /* App Bar Header */
+        .app-container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
         header {
-            background: rgba(18, 18, 20, 0.6);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 24px 20px;
+            background: rgba(6, 6, 8, 0.75);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            padding: 28px 24px;
             border-bottom: 1px solid var(--border-color);
             position: sticky;
             top: 0;
@@ -56,17 +66,22 @@
         }
 
         .header-title {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: 800;
-            letter-spacing: 1px;
+            letter-spacing: -0.5px;
             display: flex;
             align-items: center;
             gap: 8px;
+            background: linear-gradient(180deg, #FFFFFF 0%, #A1A1AA 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .header-title span {
-            color: var(--primary);
-            text-shadow: 0 0 15px var(--primary-glow);
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
         }
 
         .header-subtitle {
@@ -74,34 +89,30 @@
             color: var(--text-muted);
             margin-top: 6px;
             font-weight: 500;
+            letter-spacing: -0.1px;
         }
 
-        /* Duration Picker Widget */
         .duration-container {
-            margin: 20px 16px;
-            background: linear-gradient(135deg, rgba(35, 35, 38, 0.8) 0%, rgba(20, 20, 22, 0.8) 100%);
-            backdrop-filter: blur(10px);
+            margin: 24px 20px;
+            background: linear-gradient(145deg, rgba(22, 22, 26, 0.8) 0%, rgba(12, 12, 14, 0.8) 100%);
+            backdrop-filter: blur(20px);
             border: 1px solid var(--border-color);
             box-shadow: var(--shadow-premium);
-            padding: 20px;
+            padding: 24px;
             border-radius: var(--radius-lg);
             position: relative;
-            overflow: hidden;
+            transition: border-color 0.3s;
         }
 
-        .duration-container::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 4px; height: 100%;
-            background: var(--primary);
-            box-shadow: 0 0 10px var(--primary);
+        .duration-container:hover {
+            border-color: rgba(255, 85, 0, 0.2);
         }
 
         .duration-label {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 700;
-            letter-spacing: 1px;
-            margin-bottom: 14px;
+            letter-spacing: 1.5px;
+            margin-bottom: 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -111,22 +122,22 @@
         .duration-control {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 8px;
             background: var(--bg-input);
-            padding: 4px;
+            padding: 6px;
             border-radius: var(--radius-md);
             border: 1px solid var(--border-color);
         }
 
         .btn-counter {
-            background-color: #2D2D31;
+            background-color: #242429;
             border: none;
             color: var(--text-main);
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: var(--radius-sm);
-            font-size: 1.3rem;
-            font-weight: 600;
+            font-size: 1.4rem;
+            font-weight: 500;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -134,61 +145,70 @@
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        .btn-counter:hover {
+            background-color: #323238;
+            color: #FFF;
+        }
+
         .btn-counter:active {
-            transform: scale(0.9);
-            background-color: var(--primary);
+            transform: scale(0.92);
+            background: var(--primary-gradient);
         }
 
         .duration-value {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             font-weight: 800;
-            min-width: 70px;
+            min-width: 80px;
             text-align: center;
             color: var(--text-main);
+            letter-spacing: -0.5px;
         }
 
-        /* Search Box */
         .search-box {
-            margin: 0 16px 20px 16px;
+            margin: 0 20px 24px 20px;
             position: relative;
         }
 
         .search-input {
             width: 100%;
             background-color: var(--bg-card);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
             border: 1px solid var(--border-color);
-            padding: 16px 16px 16px 44px;
+            padding: 18px 18px 18px 48px;
             border-radius: var(--radius-md);
             color: var(--text-main);
             font-size: 0.95rem;
+            font-weight: 500;
             outline: none;
             transition: all 0.3s ease;
-            box-shadow: var(--shadow-premium);
         }
 
         .search-box::after {
             content: '🔍';
             position: absolute;
-            left: 16px;
+            left: 18px;
             top: 50%;
             transform: translateY(-50%);
             font-size: 1rem;
-            opacity: 0.6;
+            opacity: 0.4;
+            transition: opacity 0.3s;
         }
 
         .search-input:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(255, 107, 0, 0.2);
-            background-color: rgba(40, 40, 45, 0.9);
+            box-shadow: 0 0 25px rgba(255, 85, 0, 0.15);
+            background-color: rgba(20, 20, 25, 0.9);
         }
 
-        /* Navigation Tab Slider */
+        .search-input:focus + .search-box::after {
+            opacity: 0.8;
+        }
+
         .tabs-container {
             display: flex;
             overflow-x: auto;
-            padding: 4px 16px;
-            gap: 10px;
+            padding: 4px 20px;
+            gap: 8px;
             margin-bottom: 24px;
             scrollbar-width: none;
         }
@@ -203,99 +223,107 @@
             backdrop-filter: blur(10px);
             border: 1px solid var(--border-color);
             color: var(--text-muted);
-            padding: 10px 20px;
-            border-radius: 25px;
+            padding: 12px 22px;
+            border-radius: 30px;
             font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .tab:hover {
+            color: var(--text-main);
+            border-color: var(--border-hover);
         }
 
         .tab.active {
-            background: var(--primary);
-            color: var(--text-main);
-            border-color: var(--primary);
-            box-shadow: 0 4px 15px var(--primary-glow);
-            transform: translateY(-2px);
+            background: var(--primary-gradient);
+            color: #FFFFFF;
+            border-color: transparent;
+            box-shadow: 0 8px 20px var(--primary-glow);
+            transform: translateY(-1px);
         }
 
-        /* Items Grid & Cards */
         .items-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 16px;
-            padding: 0 16px;
+            gap: 14px;
+            padding: 0 20px;
         }
 
-        /* Animasi Masuk Untuk Kartu */
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(15px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .item-card {
             background: var(--bg-card);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
-            padding: 18px;
+            padding: 22px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             position: relative;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            animation: fadeInUp 0.4s ease forwards;
-            box-shadow: var(--shadow-premium);
+            transition: background 0.3s, border-color 0.3s;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .item-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-hover);
         }
 
         .item-card.selected {
-            border-color: var(--primary);
-            background: linear-gradient(145deg, rgba(38,38,42,0.8) 0%, rgba(28,28,30,0.9) 100%);
-            box-shadow: 0 0 20px rgba(255, 107, 0, 0.15), var(--shadow-premium);
-            transform: translateY(-2px);
+            border-color: rgba(255, 85, 0, 0.5);
+            background: linear-gradient(145deg, rgba(28, 22, 18, 0.6) 0%, rgba(16, 14, 12, 0.7) 100%);
+            box-shadow: 0 10px 30px rgba(255, 85, 0, 0.08);
         }
 
         .item-badge {
             position: absolute;
-            top: 18px;
-            right: 18px;
-            background: rgba(255, 107, 0, 0.12);
-            color: var(--primary);
-            padding: 5px 10px;
-            border-radius: 8px;
+            top: 22px;
+            right: 22px;
+            background: rgba(255, 85, 0, 0.1);
+            color: #FF7A00;
+            padding: 6px 12px;
+            border-radius: 10px;
             font-size: 0.7rem;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border: 1px solid rgba(255, 107, 0, 0.2);
+            letter-spacing: 0.7px;
+            border: 1px solid rgba(255, 85, 0, 0.15);
+            pointer-events: none;
         }
 
         .item-badge.beli {
-            background: rgba(0, 230, 118, 0.12);
+            background: rgba(0, 230, 118, 0.08);
             color: var(--accent-green);
-            border-color: rgba(0, 230, 118, 0.2);
+            border-color: rgba(0, 230, 118, 0.15);
         }
 
         .item-badge.free {
-            background: rgba(33, 150, 243, 0.12);
-            color: #2196F3;
-            border-color: rgba(33, 150, 243, 0.2);
+            background: rgba(0, 176, 255, 0.08);
+            color: #00B0FF;
+            border-color: rgba(0, 176, 255, 0.15);
         }
 
         .item-name {
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             font-weight: 700;
-            margin-bottom: 8px;
-            padding-right: 65px;
+            margin-bottom: 10px;
+            padding-right: 70px;
             letter-spacing: -0.3px;
+            color: #FFFFFF;
         }
 
         .price-details {
-            font-size: 0.78rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
-            margin-bottom: 18px;
-            line-height: 1.5;
+            margin-bottom: 20px;
+            line-height: 1.6;
             font-weight: 500;
         }
 
@@ -304,12 +332,12 @@
             justify-content: space-between;
             align-items: center;
             margin-top: auto;
-            border-top: 1px solid rgba(255,255,255,0.04);
-            padding-top: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            padding-top: 16px;
         }
 
         .current-rate {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             font-weight: 800;
             color: #FFFFFF;
             letter-spacing: -0.5px;
@@ -325,21 +353,22 @@
         .qty-control {
             display: flex;
             align-items: center;
-            gap: 12px;
-            background-color: rgba(0, 0, 0, 0.2);
+            gap: 14px;
+            background-color: rgba(0, 0, 0, 0.3);
             border: 1px solid var(--border-color);
-            padding: 4px;
+            padding: 5px;
             border-radius: var(--radius-sm);
+            z-index: 10;
         }
 
         .btn-qty {
-            width: 34px;
-            height: 34px;
-            border-radius: 6px;
-            background-color: #2D2D31;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background-color: #222226;
             border: none;
             color: white;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: bold;
             display: flex;
             align-items: center;
@@ -348,9 +377,13 @@
             transition: all 0.2s;
         }
 
+        .btn-qty:hover {
+            background-color: #2e2e36;
+        }
+
         .btn-qty:active {
-            background-color: var(--primary);
-            transform: scale(0.9);
+            background: var(--primary-gradient);
+            transform: scale(0.88);
         }
 
         .qty-value {
@@ -360,23 +393,84 @@
             text-align: center;
         }
 
-        /* Sticky Bottom Bar */
+        .credit-footer {
+            margin: 40px 20px 20px 20px;
+            padding: 24px;
+            background: linear-gradient(145deg, rgba(16, 16, 20, 0.6) 0%, rgba(8, 8, 10, 0.6) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            backdrop-filter: blur(15px);
+        }
+
+        .credit-brand {
+            font-size: 0.95rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .credit-brand span {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .credit-text {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .credit-socials {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-main);
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .social-link:hover {
+            background: rgba(255, 85, 0, 0.1);
+            border-color: rgba(255, 85, 0, 0.3);
+            color: #FF7A00;
+            transform: translateY(-1px);
+        }
+
         .bottom-bar {
             position: fixed;
-            bottom: 16px;
-            left: 16px;
-            right: 16px;
-            background: rgba(26, 26, 29, 0.85);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 40px);
+            max-width: 560px;
+            background: rgba(15, 15, 18, 0.75);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 16px 20px;
+            padding: 18px 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             z-index: 200;
-            border-radius: 24px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
         }
 
         .summary-info {
@@ -384,47 +478,83 @@
             flex-direction: column;
         }
 
+        .summary-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
         .summary-count {
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
-            font-weight: 600;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .btn-cancel-selection {
+            background: rgba(255, 59, 48, 0.15);
+            border: 1px solid rgba(255, 59, 48, 0.2);
+            color: #FF3B30;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            transition: all 0.2s ease;
+            display: none; 
+        }
+
+        .btn-cancel-selection:hover {
+            background: rgba(255, 59, 48, 0.25);
+            border-color: rgba(255, 59, 48, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .btn-cancel-selection:active {
+            transform: scale(0.95);
         }
 
         .summary-total {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: 800;
-            color: var(--primary);
-            text-shadow: 0 0 20px rgba(255, 107, 0, 0.2);
+            background: linear-gradient(180deg, #FFFFFF 30%, #FF7A00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             letter-spacing: -0.5px;
+            margin-top: 2px;
         }
 
         .btn-confirm {
-            background: var(--primary);
+            background: var(--primary-gradient);
             color: white;
             border: none;
-            padding: 14px 28px;
+            padding: 16px 32px;
             border-radius: var(--radius-md);
             font-size: 0.95rem;
             font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 6px 20px rgba(255, 107, 0, 0.4);
+            box-shadow: 0 8px 25px rgba(255, 61, 0, 0.3);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .btn-confirm:active {
-            transform: scale(0.96);
-            background-color: var(--primary-hover);
+        .btn-confirm:hover {
+            box-shadow: 0 12px 30px rgba(255, 61, 0, 0.4);
+            transform: translateY(-1px);
         }
 
-        /* Fullscreen Overlay / Animation Container */
+        .btn-confirm:active {
+            transform: scale(0.96) translateY(0);
+        }
+
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background-color: rgba(4, 4, 5, 0.9);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             z-index: 300;
             opacity: 0;
             visibility: hidden;
@@ -432,8 +562,8 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-            transition: all 0.3s ease;
+            padding: 24px;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .modal-overlay.active {
@@ -441,24 +571,23 @@
             visibility: visible;
         }
 
-        /* Success Animation Area */
         .animation-block {
             display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         .success-circle {
-            width: 100px;
-            height: 100px;
-            background: var(--accent-green);
+            width: 110px;
+            height: 110px;
+            background: var(--accent-green-gradient);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 30px rgba(0, 230, 118, 0.4);
+            box-shadow: 0 15px 40px rgba(0, 230, 118, 0.3);
             transform: scale(0);
         }
 
@@ -470,18 +599,25 @@
             stroke-dashoffset: 100;
         }
 
-        /* Premium Floating Receipt Card */
         .receipt-card {
             width: 100%;
-            max-width: 450px;
-            background: linear-gradient(145deg, #1A1A1C 0%, #111112 100%);
-            border: 1px solid var(--border-color);
+            max-width: 460px;
+            background: linear-gradient(160deg, #16161a 0%, #0c0c0e 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: var(--radius-lg);
-            padding: 24px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            padding: 28px;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.8);
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(40px);
             display: none;
+            position: relative;
+        }
+
+        .receipt-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 10%; right: 10%; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
         }
 
         .receipt-header {
@@ -489,57 +625,59 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid rgba(255,255,255,0.06);
-            padding-bottom: 14px;
-            margin-bottom: 18px;
+            padding-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         .receipt-title {
-            font-size: 1.15rem;
+            font-size: 1.2rem;
             font-weight: 800;
             letter-spacing: -0.3px;
             display: flex;
             align-items: center;
             gap: 8px;
+            color: #FFF;
         }
 
         .btn-close-modal {
-            background: #252529;
+            background: #222226;
             border: none;
-            color: var(--text-main);
-            width: 32px;
-            height: 32px;
+            color: var(--text-muted);
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background 0.2s;
+            transition: all 0.2s;
         }
 
         .btn-close-modal:hover {
-            background: var(--primary);
+            background: #323238;
+            color: #FFF;
+            transform: rotate(90deg);
         }
 
         .receipt-meta {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 14px 18px;
             border-radius: var(--radius-sm);
             font-size: 0.85rem;
             color: var(--text-muted);
-            margin-bottom: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.02);
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
             display: flex;
             justify-content: space-between;
         }
 
         .receipt-items-list {
-            max-height: 240px;
+            max-height: 260px;
             overflow-y: auto;
-            padding-right: 4px;
+            padding-right: 6px;
         }
 
-        /* Custom Scrollbar for Items List */
         .receipt-items-list::-webkit-scrollbar {
             width: 4px;
         }
@@ -552,22 +690,26 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px dashed rgba(255,255,255,0.04);
+            padding: 12px 0;
+            border-bottom: 1px dashed rgba(255,255,255,0.05);
             font-size: 0.9rem;
             opacity: 0;
-            transform: translateY(10px);
+            transform: translateY(15px);
         }
 
         .receipt-item-name {
             font-weight: 600;
-            color: var(--text-main);
+            color: #E4E4E7;
         }
 
         .receipt-item-qty {
-            color: var(--primary);
+            color: #FF7A00;
             font-weight: 700;
-            margin-left: 4px;
+            margin-left: 6px;
+            font-size: 0.85rem;
+            background: rgba(255,122,0,0.1);
+            padding: 2px 6px;
+            border-radius: 6px;
         }
 
         .receipt-item-price {
@@ -576,9 +718,9 @@
         }
 
         .receipt-footer-total {
-            margin-top: 18px;
-            padding-top: 16px;
-            border-top: 1px solid rgba(255,255,255,0.06);
+            margin-top: 20px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255,255,255,0.08);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -589,96 +731,109 @@
             font-weight: 700;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
         }
 
         .total-amount {
-            font-size: 1.35rem;
+            font-size: 1.45rem;
             font-weight: 800;
-            color: var(--accent-green);
-            text-shadow: 0 0 15px rgba(0, 230, 118, 0.2);
+            color: #00E676;
+            text-shadow: 0 0 20px rgba(0, 230, 118, 0.25);
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="header-title">⛺ STS<span>OUTDOOR</span></div>
-        <div class="header-subtitle">Kalkulator Pengeluaran Sewa Perlengkapan</div>
-    </header>
+    <div class="app-container">
+        <header>
+            <div class="header-title">⛺ STS<span>OUTDOOR</span></div>
+            <div class="header-subtitle">Pengeluaran Sewa Perlengkapan</div>
+        </header>
 
-    <div class="duration-container">
-        <div class="duration-label">
-            <span>DURASI SEWA BARANG</span>
-            <span style="color: var(--primary); font-size: 0.75rem; font-weight:700;">PROSES REAL-TIME</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span style="font-size: 0.95rem; font-weight: 600; color: var(--text-muted);">Berapa hari mendaki?</span>
-            <div class="duration-control">
-                <button class="btn-counter" onclick="adjustDuration(-1)">-</button>
-                <div class="duration-value" id="duration-display">1 Hari</div>
-                <button class="btn-counter" onclick="adjustDuration(1)">+</button>
+        <div class="duration-container">
+            <div class="duration-label">
+                <span>DURASI SEWA BARANG</span>
+                <span style="color: var(--primary); font-size: 0.7rem; font-weight:800;">PROSES REAL-TIME</span>
             </div>
-        </div>
-    </div>
-
-    <div class="search-box">
-        <input type="text" class="search-input" id="search-bar" placeholder="Cari alat atau perlengkapan..." oninput="filterItems()">
-    </div>
-
-    <div class="tabs-container" id="tabs-bar">
-        <div class="tab active" onclick="switchCategory(event, 'all')">Semua Alat</div>
-        <div class="tab" onclick="switchCategory(event, 'tenda')">⛺ Tenda</div>
-        <div class="tab" onclick="switchCategory(event, 'tas')">🎒 Tas & Sepatu</div>
-        <div class="tab" onclick="switchCategory(event, 'pakaian')">🧥 Pakaian & Aksesoris</div>
-        <div class="tab" onclick="switchCategory(event, 'masak')">🍳 Alat Masak</div>
-        <div class="tab" onclick="switchCategory(event, 'lainnya')">🪵 Pendukung</div>
-    </div>
-
-    <div class="items-grid" id="items-grid-container">
-        </div>
-
-    <div class="bottom-bar">
-        <div class="summary-info">
-            <div class="summary-count" id="total-items-count">0 item dipilih</div>
-            <div class="summary-total" id="total-price-display">Rp 0</div>
-        </div>
-        <button class="btn-confirm" onclick="triggerConfirmation()">Konfirmasi</button>
-    </div>
-
-    <div class="modal-overlay" id="receipt-modal">
-        
-        <div class="animation-block" id="anim-container">
-            <div class="success-circle" id="success-ring">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-            </div>
-        </div>
-
-        <div class="receipt-card" id="invoice-card">
-            <div class="receipt-header">
-                <div class="receipt-title">📄 Rincian Nota Digital</div>
-                <button class="btn-close-modal" onclick="closeReceiptModal()">✕</button>
-            </div>
-            
-            <div class="receipt-meta">
-                <span>Metode Perhitungan</span>
-                <span id="modal-duration-text" style="font-weight: 700; color: var(--text-main);">1 Hari Sewa</span>
-            </div>
-            
-            <div class="receipt-items-list" id="modal-items-list-container">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 0.95rem; font-weight: 600; color: #E4E4E7;">Berapa hari?</span>
+                <div class="duration-control">
+                    <button class="btn-counter" onclick="adjustDuration(-1)">-</button>
+                    <div class="duration-value" id="duration-display">1 Hari</div>
+                    <button class="btn-counter" onclick="adjustDuration(1)">+</button>
                 </div>
-            
-            <div class="receipt-footer-total">
-                <span class="total-label">Estimasi Total</span>
-                <span class="total-amount" id="modal-grand-total">Rp 0</span>
+            </div>
+        </div>
+
+        <div class="search-box">
+            <input type="text" class="search-input" id="search-bar" placeholder="Cari alat atau perlengkapan..." oninput="filterItems()">
+        </div>
+
+        <div class="tabs-container" id="tabs-bar">
+            <div class="tab active" onclick="switchCategory(event, 'all')">Semua Alat</div>
+            <div class="tab" onclick="switchCategory(event, 'tenda')">⛺ Tenda</div>
+            <div class="tab" onclick="switchCategory(event, 'tas')">🎒 Tas & Sepatu</div>
+            <div class="tab" onclick="switchCategory(event, 'pakaian')">🧥 Pakaian & Aksesoris</div>
+            <div class="tab" onclick="switchCategory(event, 'masak')">🍳 Alat Masak</div>
+            <div class="tab" onclick="switchCategory(event, 'lainnya')">🪵 Pendukung</div>
+        </div>
+
+        <div class="items-grid" id="items-grid-container"></div>
+
+        <footer class="credit-footer">
+            <div class="credit-brand">⛺ STS<span>OUTDOOR</span></div>
+            <div class="credit-text">
+                Penyedia layanan sewa perlengkapan outdoor premium & handal.<br>
+                Dirancang khusus untuk memudahkan petualangan Anda.
+            </div>
+            <div class="credit-socials">
+                <a href="https://instagram.com/sts_outdoor" target="_blank" class="social-link">📸 Instagram</a>
+                <a href="https://wa.me/628123456789" target="_blank" class="social-link">💬 WhatsApp</a>
+            </div>
+        </footer>
+
+        <div class="bottom-bar">
+            <div class="summary-info">
+                <div class="summary-header">
+                    <div class="summary-count" id="total-items-count">0 item dipilih</div>
+                    <button class="btn-cancel-selection" id="btn-cancel" onclick="resetSelection()">Batal</button>
+                </div>
+                <div class="summary-total" id="total-price-display">Rp 0</div>
+            </div>
+            <button class="btn-confirm" onclick="triggerConfirmation()">Konfirmasi</button>
+        </div>
+
+        <div class="modal-overlay" id="receipt-modal">
+            <div class="animation-block" id="anim-container">
+                <div class="success-circle" id="success-ring">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="receipt-card" id="invoice-card">
+                <div class="receipt-header">
+                    <div class="receipt-title">📄 Rincian Nota Digital</div>
+                    <button class="btn-close-modal" onclick="closeReceiptModal()">✕</button>
+                </div>
+                
+                <div class="receipt-meta">
+                    <span>Metode Perhitungan</span>
+                    <span id="modal-duration-text" style="font-weight: 700; color: #FFF;">1 Hari Sewa</span>
+                </div>
+                
+                <div class="receipt-items-list" id="modal-items-list-container"></div>
+                
+                <div class="receipt-footer-total">
+                    <span class="total-label">Estimasi Total</span>
+                    <span class="total-amount" id="modal-grand-total">Rp 0</span>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // DATA SEWA TETAP KONSISTEN
         const itemsData = [
             { id: "tenda_2p_sl", name: "Tenda 2p Single Layer", cat: "tenda", h1: 38000, h2: 38000, h3: 48000, ext: 10000, type: "sewa", note: "" },
             { id: "tenda_23p_dl", name: "Tenda 2-3p Dobel Layer", cat: "tenda", h1: 40000, h2: 40000, h3: 55000, ext: 15000, type: "sewa", note: "" },
@@ -743,6 +898,41 @@
         let selectedItems = {}; 
         let currentCategory = 'all';
 
+        function playSuccessSound() {
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (!AudioContext) return;
+                const ctx = new AudioContext();
+                
+                const osc1 = ctx.createOscillator();
+                const gain1 = ctx.createGain();
+                osc1.type = 'sine';
+                osc1.frequency.setValueAtTime(659.25, ctx.currentTime); 
+                gain1.gain.setValueAtTime(0.1, ctx.currentTime);
+                gain1.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
+                osc1.connect(gain1);
+                gain1.connect(ctx.destination);
+                osc1.start();
+                osc1.stop(ctx.currentTime + 0.15);
+
+                setTimeout(() => {
+                    const osc2 = ctx.createOscillator();
+                    const gain2 = ctx.createGain();
+                    osc2.type = 'sine';
+                    osc2.frequency.setValueAtTime(880.00, ctx.currentTime); 
+                    gain2.gain.setValueAtTime(0.12, ctx.currentTime);
+                    gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+                    osc2.connect(gain2);
+                    gain2.connect(ctx.destination);
+                    osc2.start();
+                    osc2.stop(ctx.currentTime + 0.35);
+                }, 80);
+
+            } catch (e) {
+                console.log("Audio context blocked or unsupported.");
+            }
+        }
+
         function formatRupiah(angka) {
             return "Rp " + angka.toLocaleString('id-ID');
         }
@@ -779,7 +969,7 @@
 
                 let priceStructureText = "";
                 if (item.type === "sewa") {
-                    priceStructureText = `H1: ${item.h1/1000}k | H2: ${item.h2/1000}k | H3: ${item.h3/1000}k | +H: ${item.ext/1000}k`;
+                    priceStructureText = `H1: ${item.h1/1000}k · H2: ${item.h2/1000}k · H3: ${item.h3/1000}k · +H: ${item.ext/1000}k`;
                 } else if (item.type === "beli") {
                     priceStructureText = "Sistem beli putus / milik sendiri";
                 } else {
@@ -788,7 +978,7 @@
 
                 const card = document.createElement('div');
                 card.className = `item-card ${qty > 0 ? 'selected' : ''}`;
-                card.style.animationDelay = `${index * 0.03}s`;
+                card.style.animationDelay = `${index * 0.015}s`;
                 
                 let badgeHTML = `<span class="item-badge">Sewa</span>`;
                 if (item.type === 'beli') badgeHTML = `<span class="item-badge beli">Beli</span>`;
@@ -800,7 +990,7 @@
                         <div class="item-name">${item.name}</div>
                         <div class="price-details">
                             ${priceStructureText}<br>
-                            ${item.note ? `<span style="color: #FF8A00; font-size:0.75rem; font-weight:600;">⚠️ ${item.note}</span>` : ''}
+                            ${item.note ? `<span style="color: #FF7A00; font-size:0.75rem; font-weight:600; margin-top: 4px; display:inline-block;">⚠️ ${item.note}</span>` : ''}
                         </div>
                     </div>
                     <div class="card-bottom">
@@ -827,8 +1017,7 @@
             if (newQty < 0) newQty = 0;
             
             if (item.type === "free" && newQty > 2) {
-                alert("Maksimal peminjaman gelas gratis adalah 2 pcs per orang!");
-                return;
+                return; 
             }
 
             if (newQty === 0) {
@@ -856,29 +1045,40 @@
 
             document.getElementById('total-items-count').innerText = totalItems + " item dipilih";
             document.getElementById('total-price-display').innerText = formatRupiah(totalPrice);
+
+            const cancelBtn = document.getElementById('btn-cancel');
+            if (totalItems > 0) {
+                cancelBtn.style.display = 'inline-block';
+            } else {
+                cancelBtn.style.display = 'none';
+            }
         }
 
-        function switchCategory(e, categoryName) {
-            currentCategory = categoryName;
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(t => t.classList.remove('active'));
-            e.target.classList.add('active');
+        function resetSelection() {
+            if (Object.keys(selectedItems).length === 0) return;
+            
+            selectedItems = {};
             renderItemsList();
+            updateGlobalTotal();
         }
 
         function filterItems() {
             renderItemsList();
         }
 
-        /* FITUR ANIMASI ANIME.JS & CARD NOTA BARU */
+        function switchCategory(e, category) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            e.currentTarget.classList.add('active');
+            currentCategory = category;
+            renderItemsList();
+        }
+
         function triggerConfirmation() {
             let hasSelection = Object.keys(selectedItems).length > 0;
             if (!hasSelection) {
-                alert("Silakan pilih minimal 1 jenis barang terlebih dahulu!");
                 return;
             }
 
-            // Setup Data Awal Nota Digital
             document.getElementById('modal-duration-text').innerText = rentDuration + " Hari Masa Sewa";
             const listContainer = document.getElementById('modal-items-list-container');
             listContainer.innerHTML = '';
@@ -905,7 +1105,6 @@
             }
             document.getElementById('modal-grand-total').innerText = formatRupiah(grandTotal);
 
-            // Buka Modal Overlay Layar
             const overlay = document.getElementById('receipt-modal');
             const animContainer = document.getElementById('anim-container');
             const invoiceCard = document.getElementById('invoice-card');
@@ -914,7 +1113,6 @@
             animContainer.style.display = 'flex';
             invoiceCard.style.display = 'none';
 
-            // Jalankan Timeline Animasi Menggunakan Anime.js
             let timeline = anime.timeline({
                 easing: 'easeOutElastic(1, .8)'
             });
@@ -923,31 +1121,32 @@
             .add({
                 targets: '#success-ring',
                 scale: [0, 1],
-                duration: 800
+                duration: 800,
+                begin: function() {
+                    playSuccessSound();
+                }
             })
             .add({
                 targets: '#success-ring svg',
                 strokeDashoffset: [100, 0],
                 duration: 600,
                 easing: 'easeInOutSine'
-            }, '-=300')
+            }, '-=400')
             .add({
                 targets: '#success-ring',
                 scale: [1, 0],
                 opacity: [1, 0],
-                duration: 500,
-                delay: 600, 
+                duration: 400,
+                delay: 500, 
                 easing: 'easeInBack',
                 complete: function() {
-                    // Sembunyikan lingkaran animasi, ganti ke floating card rincian nota
                     animContainer.style.display = 'none';
                     invoiceCard.style.display = 'block';
                     
-                    // Animasi masuk untuk Card Nota Utama & Stagger list harganya
                     anime({
                         targets: '#invoice-card',
                         opacity: [0, 1],
-                        translateY: [30, 0],
+                        translateY: [40, 0],
                         duration: 600,
                         easing: 'easeOutCubic'
                     });
@@ -955,8 +1154,8 @@
                     anime({
                         targets: '.receipt-item-row',
                         opacity: [0, 1],
-                        translateY: [10, 0],
-                        delay: anime.stagger(60),
+                        translateY: [15, 0],
+                        delay: anime.stagger(50),
                         easing: 'easeOutCubic'
                     });
                 }
@@ -965,9 +1164,9 @@
 
         function closeReceiptModal() {
             document.getElementById('receipt-modal').classList.remove('active');
-            // Kembalikan opacity objek ke setelan awal
             document.getElementById('invoice-card').style.opacity = 0;
             document.getElementById('success-ring').style.opacity = 1;
+            document.getElementById('success-ring').style.transform = 'scale(0)';
         }
 
         window.onload = function() {
